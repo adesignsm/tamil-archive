@@ -4,8 +4,8 @@ import { Environment, PointerLockControls, useGLTF, useVideoTexture } from "@rea
 import { Bloom, Noise, Vignette, EffectComposer } from '@react-three/postprocessing'
 import * as THREE from "three";
 
-import MODEL from "./assets/models/TamilArchive05-embedded.gltf";
-import SHELF_MODEL from "./assets/models/TamilArchive_ItemsonShelf.glb";
+// import MODEL from "./assets/models/TamilArchive05-embedded.gltf";
+import MODEL from "./assets/models/TamilArchive_Final.glb";
 import EAST_VIDEO from "./assets/media/East_Animation_lowReso.mp4";
 import WEST_VIDEO from "./assets/media/West_Animation_LowReso.mp4";
 import SOUTH_VIDEO from "./assets/media/South_Animation_LowReso.mp4";
@@ -77,8 +77,8 @@ useEffect(() => {
             const moveSpeed = 20;
             const maxPosX = 30; // Maximum allowed X position
             const minPosX = -40; // Minimum allowed X position
-            const maxPosZ = 150; // Maximum allowed Z position
-            const minPosZ = -170; // Minimum allowed Z position
+            const maxPosZ = 200; // Maximum allowed Z position
+            const minPosZ = -190; // Minimum allowed Z position
       
             if (controlsRef.current) {
                 rotation.set(controlsRef.current.getObject().rotation.x,controlsRef.current.getObject().rotation.y,0);
@@ -133,15 +133,15 @@ useEffect(() => {
         );
     };
 
-    const ShelfModel = () => {
-        const { scene } = useGLTF(SHELF_MODEL);
+    // const ShelfModel = () => {
+    //     const { scene } = useGLTF(SHELF_MODEL);
 
-        return (
-            <mesh scale={1} position={[-80, -30, 250]}>
-                <primitive object={scene} />
-            </mesh>
-        );
-    }
+    //     return (
+    //         <mesh scale={1} position={[-80, -30, 250]}>
+    //             <primitive object={scene} />
+    //         </mesh>
+    //     );
+    // }
 
     const VideoPlane = ({ videoSource, xPos, yPos, zPos, yRot }) => {
         const texture = useVideoTexture(videoSource);
@@ -180,7 +180,6 @@ useEffect(() => {
                     {dayState === "MORNING" || dayState === "AFTERNOON" ? <DayTime /> : <EveningTime />}
 
                     <Model />
-                    <ShelfModel />
 
                     <VideoPlane videoSource={SOUTH_VIDEO} xPos={-8} yPos={8} zPos={-235} yRot={0} />
                     <VideoPlane videoSource={EAST_VIDEO} xPos={-80} yPos={16} zPos={-25} yRot={1.6} />
@@ -190,7 +189,7 @@ useEffect(() => {
 
                     <EffectComposer>
                         <Bloom luminanceThreshold={0} luminanceSmoothing={0.5} height={window.innerHeight} />
-                        <Noise opacity={0.1} />
+                        <Noise opacity={0.2} />
                         <Vignette eskil={true} offset={1.5} darkness={0.2} />
                     </EffectComposer>
                 </Canvas>
