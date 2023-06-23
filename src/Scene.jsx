@@ -96,13 +96,19 @@ useEffect(() => {
                     velocity.copy(direction).multiplyScalar(moveSpeed);
       
                     const elapsedTime = clock.getElapsedTime();
-                    const bobbingOffset = Math.sin(elapsedTime * 15) * 0.2; // Adjust the bobbing amount as desired
+                    const bobbingOffset = Math.sin(elapsedTime * 15) * 0.2; // Adjust the bobbing amount
       
                     const currentPosition = controlsRef.current.getObject().position;
                     const newPositionX = THREE.MathUtils.clamp(currentPosition.x + velocity.x * 0.1,minPosX,maxPosX);
                     const newPositionZ = THREE.MathUtils.clamp(
                     currentPosition.z + velocity.z * 0.1,minPosZ,maxPosZ);
                     controlsRef.current.getObject().position.set(newPositionX,currentPosition.y + bobbingOffset,newPositionZ);
+
+                    console.log(rotation);
+
+                    if (currentPosition.x == 30 && currentPosition.z == -190) {
+                        console.log("hit");
+                    }
                 }
             }
         };
@@ -132,16 +138,6 @@ useEffect(() => {
             </mesh>
         );
     };
-
-    // const ShelfModel = () => {
-    //     const { scene } = useGLTF(SHELF_MODEL);
-
-    //     return (
-    //         <mesh scale={1} position={[-80, -30, 250]}>
-    //             <primitive object={scene} />
-    //         </mesh>
-    //     );
-    // }
 
     const VideoPlane = ({ videoSource, xPos, yPos, zPos, yRot }) => {
         const texture = useVideoTexture(videoSource);
@@ -176,7 +172,7 @@ useEffect(() => {
     return (
         <div>
             <Suspense>
-                <Canvas frameloop="always" camera={{ fov: 60, near: 0.1, far: 100000, position: [0, 15, 100] }}>
+                <Canvas frameloop="always" camera={{ fov: 30, near: 0.1, far: 100000, position: [0, 15, 100] }}>
                     {dayState === "MORNING" || dayState === "AFTERNOON" ? <DayTime /> : <EveningTime />}
 
                     <Model />
@@ -199,3 +195,8 @@ useEffect(() => {
 };
 
 export default Scene;
+
+/**
+ 
+
+ */
