@@ -172,7 +172,7 @@ useEffect(() => {
     return (
         <div>
             <Suspense>
-                <Canvas frameloop="always" camera={{ fov: 30, near: 0.5, far: 100000, position: [0, 15, 100] }}>
+                <Canvas frameloop="always" camera={{ fov: 10, near: 1, far: 100000, position: [0, 15, 100] }}>
                     {dayState === "MORNING" || dayState === "AFTERNOON" ? <DayTime /> : <EveningTime />}
 
                     <Model />
