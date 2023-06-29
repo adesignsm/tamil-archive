@@ -281,7 +281,7 @@ useEffect(() => {
 
     return (
         <div>
-            <p id="prompt-indicator"> E </p>
+            <p id="prompt-indicator"> 9 </p>
             {openPrompt === true ? <Prompt data={promptData} counter={itemCounter} /> : null}
             <Suspense>
                 <Canvas frameloop="always" camera={{ fov: 60, near: 0.1, far: 100000, position: [0, 6, 100] }}>
