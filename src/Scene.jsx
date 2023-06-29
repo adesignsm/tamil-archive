@@ -135,7 +135,7 @@ useEffect(() => {
 
                     if (currentPosition.z > 20 && currentPosition.z < 60) {
                         if (currentPosition.x >= -35 && currentPosition.x < -31) {
-                            if (rotX === -2 && rotZ === 1 || rotZ === 1) {
+                            // if (rotX === -2 && rotZ === 1 || rotZ === 1) {
                                 $("#prompt-indicator").stop().fadeIn();
 
                                 document.onkeydown = (e) => {
@@ -152,7 +152,7 @@ useEffect(() => {
                                         $("#prompt-indicator").stop().fadeOut();
                                     }
                                 }
-                            }
+                            // }
                         } else {
                             $("#prompt-indicator").stop().fadeOut();
                             setOpenPrompt(false);
@@ -161,7 +161,7 @@ useEffect(() => {
 
                     if (currentPosition.z > 20 && currentPosition.z < 80) {
                         if (currentPosition.x >= 20 && currentPosition.x <= 30) {
-                            if (rotX === -2 && rotZ === -2) {
+                            // if (rotX === -2 && rotZ === -2) {
                                 $("#prompt-indicator").stop().fadeIn();
 
                                 document.onkeydown = (e) => {
@@ -178,7 +178,7 @@ useEffect(() => {
                                         $("#prompt-indicator").stop().fadeOut();
                                     }
                                 }
-                            }
+                            // }
                         } else {
                             $("#prompt-indicator").stop().fadeOut();
                             setOpenPrompt(false);
@@ -187,7 +187,7 @@ useEffect(() => {
 
                     if (currentPosition.z > 170 && currentPosition.z < 200) {
                         if (currentPosition.x >= 20 && currentPosition.x <= 30) {
-                            if (rotX === -2 && rotZ >= -2) {
+                            // if (rotX === -2 && rotZ >= -2) {
                                 $("#prompt-indicator").stop().fadeIn();
 
                                 document.onkeydown = (e) => {
@@ -204,14 +204,12 @@ useEffect(() => {
                                         $("#prompt-indicator").stop().fadeOut();
                                     }
                                 }
-                            }
+                            // }
                         } else {
                             $("#prompt-indicator").stop().fadeOut();
                             setOpenPrompt(false);
                         }
                     }
-
-                    // console.log(rotX, rotZ);
                 }
             }
         };
