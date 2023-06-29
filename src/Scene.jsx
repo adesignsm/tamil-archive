@@ -53,18 +53,32 @@ const Scene = () => {
         };
     }, []);
 
+    // const handleKeyDown = (event) => {
+    //     if (event.key === "8" || event.key === "8") moveForward.current = true;
+    //     if (event.key === "4" || event.key === "4") moveLeft.current = true;
+    //     if (event.key === "6" || event.key === "6") moveBackward.current = true;
+    //     if (event.key === "2" || event.key === "2") moveRight.current = true;
+    // };
+
+    // const handleKeyUp = (event) => {
+    //     if (event.key === "8" || event.key === "8") moveForward.current = false;
+    //     if (event.key === "4" || event.key === "4") moveLeft.current = false;
+    //     if (event.key === "6" || event.key === "6") moveBackward.current = false;
+    //     if (event.key === "2" || event.key === "2") moveRight.current = false;
+    // };
+
     const handleKeyDown = (event) => {
-        if (event.key === "8" || event.key === "8") moveForward.current = true;
-        if (event.key === "4" || event.key === "4") moveLeft.current = true;
-        if (event.key === "6" || event.key === "6") moveBackward.current = true;
-        if (event.key === "2" || event.key === "2") moveRight.current = true;
+        if (event.key === "w" || event.key === "W") moveForward.current = true;
+        if (event.key === "a" || event.key === "A") moveLeft.current = true;
+        if (event.key === "s" || event.key === "S") moveBackward.current = true;
+        if (event.key === "d" || event.key === "D") moveRight.current = true;
     };
 
     const handleKeyUp = (event) => {
-        if (event.key === "8" || event.key === "8") moveForward.current = false;
-        if (event.key === "4" || event.key === "4") moveLeft.current = false;
-        if (event.key === "6" || event.key === "6") moveBackward.current = false;
-        if (event.key === "2" || event.key === "2") moveRight.current = false;
+        if (event.key === "w" || event.key === "W") moveForward.current = false;
+        if (event.key === "a" || event.key === "A") moveLeft.current = false;
+        if (event.key === "s" || event.key === "S") moveBackward.current = false;
+        if (event.key === "d" || event.key === "D") moveRight.current = false;
     };
 
 useEffect(() => {
@@ -122,7 +136,7 @@ useEffect(() => {
                     if (currentPosition.z > 20 && currentPosition.z < 60) {
                         if (currentPosition.x >= -35 && currentPosition.x < -31) {
                             if (rotX === -2 && rotZ === 1 || rotZ === 1) {
-                                $("#prompt-indicator").fadeIn();
+                                $("#prompt-indicator").stop().fadeIn();
 
                                 document.onkeydown = (e) => {
                                     if (e.key === "9") {
@@ -135,12 +149,12 @@ useEffect(() => {
                                         setPromptData("MILO");
                                         setOpenPrompt(true);
 
-                                        $("#prompt-indicator").fadeOut();
+                                        $("#prompt-indicator").stop().fadeOut();
                                     }
                                 }
                             }
                         } else {
-                            $("#prompt-indicator").fadeOut();
+                            $("#prompt-indicator").stop().fadeOut();
                             setOpenPrompt(false);
                         }
                     }
@@ -148,7 +162,7 @@ useEffect(() => {
                     if (currentPosition.z > 20 && currentPosition.z < 80) {
                         if (currentPosition.x >= 20 && currentPosition.x <= 30) {
                             if (rotX === -2 && rotZ === -2) {
-                                $("#prompt-indicator").fadeIn();
+                                $("#prompt-indicator").stop().fadeIn();
 
                                 document.onkeydown = (e) => {
                                     if (e.key === "9") {
@@ -161,12 +175,12 @@ useEffect(() => {
                                         setPromptData("RICE");
                                         setOpenPrompt(true);
 
-                                        $("#prompt-indicator").fadeOut();
+                                        $("#prompt-indicator").stop().fadeOut();
                                     }
                                 }
                             }
                         } else {
-                            $("#prompt-indicator").fadeOut();
+                            $("#prompt-indicator").stop().fadeOut();
                             setOpenPrompt(false);
                         }
                     }
@@ -174,7 +188,7 @@ useEffect(() => {
                     if (currentPosition.z > 170 && currentPosition.z < 200) {
                         if (currentPosition.x >= 20 && currentPosition.x <= 30) {
                             if (rotX === -2 && rotZ >= -2) {
-                                $("#prompt-indicator").fadeIn();
+                                $("#prompt-indicator").stop().fadeIn();
 
                                 document.onkeydown = (e) => {
                                     if (e.key === "9") {
@@ -187,12 +201,12 @@ useEffect(() => {
                                         setPromptData("HORLICKS");
                                         setOpenPrompt(true);
 
-                                        $("#prompt-indicator").fadeOut();
+                                        $("#prompt-indicator").stop().fadeOut();
                                     }
                                 }
                             }
                         } else {
-                            $("#prompt-indicator").fadeOut();
+                            $("#prompt-indicator").stop().fadeOut();
                             setOpenPrompt(false);
                         }
                     }
