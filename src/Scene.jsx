@@ -54,17 +54,17 @@ const Scene = () => {
     }, []);
 
     const handleKeyDown = (event) => {
-        if (event.key === "w" || event.key === "W") moveForward.current = true;
-        if (event.key === "a" || event.key === "A") moveLeft.current = true;
-        if (event.key === "s" || event.key === "S") moveBackward.current = true;
-        if (event.key === "d" || event.key === "D") moveRight.current = true;
+        if (event.key === "8" || event.key === "8") moveForward.current = true;
+        if (event.key === "4" || event.key === "4") moveLeft.current = true;
+        if (event.key === "6" || event.key === "6") moveBackward.current = true;
+        if (event.key === "2" || event.key === "2") moveRight.current = true;
     };
 
     const handleKeyUp = (event) => {
-        if (event.key === "w" || event.key === "W") moveForward.current = false;
-        if (event.key === "a" || event.key === "A") moveLeft.current = false;
-        if (event.key === "s" || event.key === "S") moveBackward.current = false;
-        if (event.key === "d" || event.key === "D") moveRight.current = false;
+        if (event.key === "8" || event.key === "8") moveForward.current = false;
+        if (event.key === "4" || event.key === "4") moveLeft.current = false;
+        if (event.key === "6" || event.key === "6") moveBackward.current = false;
+        if (event.key === "2" || event.key === "2") moveRight.current = false;
     };
 
 useEffect(() => {
@@ -125,7 +125,7 @@ useEffect(() => {
                                 $("#prompt-indicator").fadeIn();
 
                                 document.onkeydown = (e) => {
-                                    if (e.key === "e") {
+                                    if (e.key === "9") {
                                         if (itemCounter === 3) {
                                             setItemCounter(3);
                                         } else {
@@ -151,7 +151,7 @@ useEffect(() => {
                                 $("#prompt-indicator").fadeIn();
 
                                 document.onkeydown = (e) => {
-                                    if (e.key === "e") {
+                                    if (e.key === "9") {
                                         if (itemCounter >= 3) {
                                             setItemCounter(3)
                                         } else {
@@ -177,7 +177,7 @@ useEffect(() => {
                                 $("#prompt-indicator").fadeIn();
 
                                 document.onkeydown = (e) => {
-                                    if (e.key === "e") {
+                                    if (e.key === "9") {
                                         if (itemCounter >= 3) {
                                             setItemCounter(3)
                                         } else {
