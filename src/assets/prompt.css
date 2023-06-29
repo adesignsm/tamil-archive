@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+#prompt-container {
+    position: fixed;
+    top: 30dvh;
+    left: 40dvw;
+    width: 40dvw;
+    background-color: #fff;
+    padding: 1rem;
+    text-align: left;
+    border-radius: 20px;
+    border: 3px solid #e0be4a;
+    z-index: 999;
+}
+
+#prompt-container p {
+    color: #dea0b7;
+    font-family: 'VT323', monospace;
+    font-size: xx-large;
+    font-weight: bolder;
+    margin: 0;
+}
+
+#prompt-details-container #line {
+    border-bottom: 3px solid #e0be4a;
+}

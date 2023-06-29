@@ -3,21 +3,31 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, PointerLockControls, useGLTF, useVideoTexture } from "@react-three/drei";
 import { Bloom, Noise, Vignette, EffectComposer } from '@react-three/postprocessing'
 import * as THREE from "three";
+import $ from "jquery";
 
-// import MODEL from "./assets/models/TamilArchive05-embedded.gltf";
 import MODEL from "./assets/models/TamilArchive_Final.glb";
+import MODEL_CASHREG_FAN from "./assets/models/TamilArchive_CashRegnFan.glb";
+
 import EAST_VIDEO from "./assets/media/East_Animation_lowReso.mp4";
 import WEST_VIDEO from "./assets/media/West_Animation_LowReso.mp4";
 import SOUTH_VIDEO from "./assets/media/South_Animation_LowReso.mp4";
+
+import Prompt from "./Prompt";
+
 import "./assets/scene.css";
 
 const Scene = () => {
     const [time, setTime] = useState(0);
     const [dayState, setDayState] = useState("");
+    const [openPrompt, setOpenPrompt] = useState(false);
+    const [promptData, setPromptData] = useState("");
+    const [itemCounter, setItemCounter] = useState(0);
+
     const moveForward = useRef(false);
     const moveBackward = useRef(false);
     const moveLeft = useRef(false);
     const moveRight = useRef(false);
+    const promptRef = useRef(false);
     const controlsRef = useRef();
     let frameId = useRef(null);
 
@@ -76,12 +86,16 @@ useEffect(() => {
         return function updateMovement() {
             const moveSpeed = 20;
             const maxPosX = 30; // Maximum allowed X position
-            const minPosX = -40; // Minimum allowed X position
+            const minPosX = -35; // Minimum allowed X position
             const maxPosZ = 200; // Maximum allowed Z position
             const minPosZ = -190; // Minimum allowed Z position
       
             if (controlsRef.current) {
                 rotation.set(controlsRef.current.getObject().rotation.x,controlsRef.current.getObject().rotation.y,0);
+
+                let rotX = Math.floor(controlsRef.current.getObject().rotation.x);
+                let rotY = Math.floor(controlsRef.current.getObject().rotation.y);
+                let rotZ = Math.floor(controlsRef.current.getObject().rotation.z);
       
                 direction.z = Number(moveBackward.current) - Number(moveForward.current);
                 direction.x = Number(moveRight.current) - Number(moveLeft.current);
@@ -96,7 +110,7 @@ useEffect(() => {
                     velocity.copy(direction).multiplyScalar(moveSpeed);
       
                     const elapsedTime = clock.getElapsedTime();
-                    const bobbingOffset = Math.sin(elapsedTime * 15) * 0.2; // Adjust the bobbing amount
+                    const bobbingOffset = Math.sin(elapsedTime * 20) * 0.2; // Adjust the bobbing amount
       
                     const currentPosition = controlsRef.current.getObject().position;
                     const newPositionX = THREE.MathUtils.clamp(currentPosition.x + velocity.x * 0.1,minPosX,maxPosX);
@@ -104,11 +118,85 @@ useEffect(() => {
                     currentPosition.z + velocity.z * 0.1,minPosZ,maxPosZ);
                     controlsRef.current.getObject().position.set(newPositionX,currentPosition.y + bobbingOffset,newPositionZ);
 
-                    console.log(rotation);
+                    if (currentPosition.z > 20 && currentPosition.z < 60) {
+                        if (currentPosition.x >= -35 && currentPosition.x < -31) {
+                            if (rotX === -2 && rotZ === 1 || rotZ === 1) {
+                                $("#prompt-indicator").fadeIn();
 
-                    if (currentPosition.x == 30 && currentPosition.z == -190) {
-                        console.log("hit");
+                                document.onkeydown = (e) => {
+                                    if (e.key === "e") {
+                                        if (itemCounter === 3) {
+                                            setItemCounter(3);
+                                        } else {
+                                            setItemCounter((prevCounter) => prevCounter + 1);
+                                        }
+
+                                        setPromptData("MILO");
+                                        setOpenPrompt(true);
+
+                                        $("#prompt-indicator").fadeOut();
+                                    }
+                                }
+                            }
+                        } else {
+                            $("#prompt-indicator").fadeOut();
+                            setOpenPrompt(false);
+                        }
                     }
+
+                    if (currentPosition.z > 20 && currentPosition.z < 80) {
+                        if (currentPosition.x >= 20 && currentPosition.x <= 30) {
+                            if (rotX === -2 && rotZ === -2) {
+                                $("#prompt-indicator").fadeIn();
+
+                                document.onkeydown = (e) => {
+                                    if (e.key === "e") {
+                                        if (itemCounter >= 3) {
+                                            setItemCounter(3)
+                                        } else {
+                                            setItemCounter((prevCounter) => prevCounter + 1);
+                                        }
+
+                                        setPromptData("RICE");
+                                        setOpenPrompt(true);
+
+                                        $("#prompt-indicator").fadeOut();
+                                    }
+                                }
+                            }
+                        } else {
+                            $("#prompt-indicator").fadeOut();
+                            setOpenPrompt(false);
+                        }
+                    }
+
+                    if (currentPosition.z > 170 && currentPosition.z < 200) {
+                        if (currentPosition.x >= 20 && currentPosition.x <= 30) {
+                            if (rotX === -2 && rotZ >= -2) {
+                                $("#prompt-indicator").fadeIn();
+
+                                document.onkeydown = (e) => {
+                                    if (e.key === "e") {
+                                        if (itemCounter >= 3) {
+                                            setItemCounter(3)
+                                        } else {
+                                            setItemCounter((prevCounter) => prevCounter + 1);
+                                        }
+
+                                        setPromptData("HORLICKS");
+                                        setOpenPrompt(true);
+
+                                        $("#prompt-indicator").fadeOut();
+                                    }
+                                }
+                            }
+                        } else {
+                            $("#prompt-indicator").fadeOut();
+                            setOpenPrompt(false);
+                        }
+                    }
+
+                    // console.log(rotX, rotZ);
                 }
             }
         };
@@ -131,6 +219,17 @@ useEffect(() => {
 
     const Model = () => {
         const { scene } = useGLTF(MODEL);
+
+        return (
+            <mesh scale={1} position={[-80, -30, 250]}>
+                <primitive object={scene} />
+            </mesh>
+        );
+    };
+
+    
+    const CashRegAndFanModel = () => {
+        const { scene } = useGLTF(MODEL_CASHREG_FAN);
 
         return (
             <mesh scale={1} position={[-80, -30, 250]}>
@@ -171,17 +270,20 @@ useEffect(() => {
 
     return (
         <div>
+            <p id="prompt-indicator"> E </p>
+            {openPrompt === true ? <Prompt data={promptData} counter={itemCounter} /> : null}
             <Suspense>
-                <Canvas frameloop="always" camera={{ fov: 20, near: 1, far: 100000, position: [0, 15, 100] }}>
+                <Canvas frameloop="always" camera={{ fov: 60, near: 0.1, far: 100000, position: [0, 6, 100] }}>
                     {dayState === "MORNING" || dayState === "AFTERNOON" ? <DayTime /> : <EveningTime />}
 
                     <Model />
+                    <CashRegAndFanModel />
 
                     <VideoPlane videoSource={SOUTH_VIDEO} xPos={-8} yPos={8} zPos={-235} yRot={0} />
                     <VideoPlane videoSource={EAST_VIDEO} xPos={-80} yPos={16} zPos={-25} yRot={1.6} />
                     <VideoPlane videoSource={WEST_VIDEO} xPos={65} yPos={16} zPos={-40} yRot={-1.6} />
             
-                    <PointerLockControls ref={controlsRef}/>
+                    <PointerLockControls ref={controlsRef} />
 
                     <EffectComposer>
                         <Bloom luminanceThreshold={0} luminanceSmoothing={0.5} height={window.innerHeight} />
@@ -195,8 +297,3 @@ useEffect(() => {
 };
 
 export default Scene;
-
-/**
- 
-
- */
