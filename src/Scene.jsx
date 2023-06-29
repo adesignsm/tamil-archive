@@ -7,6 +7,7 @@ import $ from "jquery";
 
 import MODEL from "./assets/models/TamilArchive_Final.glb";
 import MODEL_CASHREG_FAN from "./assets/models/TamilArchive_CashRegnFan.glb";
+import MODEL_PAINTINGS from "./assets/models/TamilArchive_Final-Addeditems.glb";
 
 import EAST_VIDEO from "./assets/media/East_Animation_lowReso.mp4";
 import WEST_VIDEO from "./assets/media/West_Animation_LowReso.mp4";
@@ -238,11 +239,21 @@ useEffect(() => {
         );
     };
 
+    const PaintingsModels = () => {
+        const { scene } = useGLTF(MODEL_PAINTINGS);
+
+        return (
+            <mesh scale={1} position={[-80, -30, 250]}>
+                <primitive object={scene} />
+            </mesh>
+        );
+    };
+
     const VideoPlane = ({ videoSource, xPos, yPos, zPos, yRot }) => {
         const texture = useVideoTexture(videoSource);
         return (
             <mesh scale={1} position={[xPos, yPos, zPos]} rotation={[0, yRot, 0]}>
-                <planeBufferGeometry args={[140, 80]} />
+                <planeBufferGeometry args={[140, 90]} />
                 <meshBasicMaterial map={texture} toneMapped={false} side={THREE.DoubleSide} />
             </mesh>
         );
@@ -278,8 +289,9 @@ useEffect(() => {
 
                     <Model />
                     <CashRegAndFanModel />
+                    <PaintingsModels />
 
-                    <VideoPlane videoSource={SOUTH_VIDEO} xPos={-8} yPos={8} zPos={-235} yRot={0} />
+                    <VideoPlane videoSource={SOUTH_VIDEO} xPos={-8} yPos={12} zPos={-235} yRot={0} />
                     <VideoPlane videoSource={EAST_VIDEO} xPos={-80} yPos={16} zPos={-25} yRot={1.6} />
                     <VideoPlane videoSource={WEST_VIDEO} xPos={65} yPos={16} zPos={-40} yRot={-1.6} />
             
