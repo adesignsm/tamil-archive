@@ -299,7 +299,7 @@ useEffect(() => {
 
                     <EffectComposer>
                         <Bloom luminanceThreshold={0} luminanceSmoothing={0.5} height={window.innerHeight} />
-                        <Noise opacity={0.2} />
+                        <Noise opacity={0.1} />
                         <Vignette eskil={true} offset={1.5} darkness={0.2} />
                     </EffectComposer>
                 </Canvas>
