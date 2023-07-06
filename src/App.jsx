@@ -14,7 +14,7 @@ const App = () => {
 
     return (
         <>
-            <LoadingScreen />
+            {isLoading === true ? <LoadingScreen /> : null}
             <Scene />
         </>
     )
