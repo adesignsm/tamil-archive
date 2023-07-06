@@ -3,6 +3,7 @@
 #loading-screen {
     height: 100vh;
     width: 100%;
+    background-color: #d6be39;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +11,7 @@
 
 #loading-screen .loader {
     color: #dea0b7;
-    font-size: 250px;
+    font-size: 225px;
     font-family: 'VT323', monospace;
     animation: blink 1s infinite;
 }
