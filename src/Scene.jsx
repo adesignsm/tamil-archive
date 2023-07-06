@@ -29,7 +29,7 @@ const Scene = () => {
     const moveBackward = useRef(false);
     const moveLeft = useRef(false);
     const moveRight = useRef(false);
-    const promptRef = useRef(false);
+
     const controlsRef = useRef();
     let frameId = useRef(null);
 
@@ -108,10 +108,6 @@ useEffect(() => {
       
             if (controlsRef.current) {
                 rotation.set(controlsRef.current.getObject().rotation.x,controlsRef.current.getObject().rotation.y,0);
-
-                let rotX = Math.floor(controlsRef.current.getObject().rotation.x);
-                let rotY = Math.floor(controlsRef.current.getObject().rotation.y);
-                let rotZ = Math.floor(controlsRef.current.getObject().rotation.z);
       
                 direction.z = Number(moveBackward.current) - Number(moveForward.current);
                 direction.x = Number(moveRight.current) - Number(moveLeft.current);
@@ -137,7 +133,6 @@ useEffect(() => {
                     console.log(currentPosition.x, currentPosition.z);
 
                     if (currentPosition.z > 85 && currentPosition.z < 110) {
-                        console.log("cashier")
                         $("#prompt-indicator").show();
                         document.onkeydown = (e) => {
                             if (e.key === "9") {
@@ -156,7 +151,6 @@ useEffect(() => {
 
                     if (currentPosition.z > 20 && currentPosition.z < 60) {
                         if (currentPosition.x >= -35 && currentPosition.x <= -31) {
-                            console.log("milo")
                             $("#prompt-indicator").show();
 
                             document.onkeydown = (e) => {
@@ -205,7 +199,6 @@ useEffect(() => {
 
                     if (currentPosition.z > 170 && currentPosition.z < 200) {
                         if (currentPosition.x >= 20 && currentPosition.x <= 30) {
-                            console.log("horlicks")
                             $("#prompt-indicator").show();
 
                             document.onkeydown = (e) => {

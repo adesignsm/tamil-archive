@@ -15,6 +15,7 @@ canvas {
     border: 5px solid #fff;
     border-radius: 15px;
     color: #fff;
+    background-color: #f4709e;
     z-index: 9999;
     animation: blink 1s infinite;
     font-family: 'VT323', monospace;
