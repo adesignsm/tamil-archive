@@ -9,12 +9,12 @@ const App = () => {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
-        }, 7000);
+        }, 15000);
     }, []);
 
     return (
         <>
-            {isLoading ? (<LoadingScreen />) : (<Scene />)}    
+            {isLoading ? (<LoadingScreen />) : (<Scene />)}
         </>
     )
 }

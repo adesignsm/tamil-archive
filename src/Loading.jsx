@@ -4,8 +4,7 @@ import "./assets/loading.css";
 const LoadingScreen = () => {
   return (
     <div id="loading-screen">
-      <div className="loader"></div>
-      <p>Loading...</p>
+      <h1 className="loader">Loading...</h1>
     </div>
   );
 };
