@@ -5,6 +5,7 @@ import "./assets/prompt.css";
 const Prompt = ({data, counter}) => {
     const [promptContent, setPromptContent] = useState("");
     const [showConfetti, setShowConfetti] = useState(false);
+    const [cashierPrompt, setCashierPrompt] = useState(false);
     console.log(data, counter);
 
     const promptBank = {
@@ -18,15 +19,23 @@ const Prompt = ({data, counter}) => {
             setPromptContent(promptBank.counter_one);
         } else if (counter === 2 ) {
             setPromptContent(promptBank.counter_two);
-        } else if (counter === 3) {
+        } else if (counter >= 3) {
             setPromptContent(promptBank.counter_three);
             setShowConfetti(true);
             document.onkeydown = (e) => {
                 if (e.key === "5") {
                     window.location.reload();
+                    return;
+                } else {
+                    window.location.reload();
                 }
             }
+        }
 
+        if (data === "CASHIER") {
+            setCashierPrompt(true);
+        } else if (data !== "CASHIER" || counter === 3) {
+            setCashierPrompt(false);
         }
     }, [promptContent]);
 
@@ -40,6 +49,25 @@ const Prompt = ({data, counter}) => {
                 <p>
                     {promptContent}
                 </p>
+                {cashierPrompt === true ? 
+                    <p>
+                       Mr. Bradshaw says:
+                       <br/>
+                       “Good Evening, Miss Sivakamy told me she sent you to pick up some items for her. Your shopping list is:
+                       <br/>
+                       <br/>
+                       1 Tin of Milo
+                       <br/>
+                       1 Bag of Rice
+                       <br/>
+                       1 Package of Horlicks
+                       <br/>
+                       <br />
+                       Use 8,4,6,2 to navigate through the store and find each item.” 
+                    </p>
+
+                    : null
+                }
             </div>
         </>
     )

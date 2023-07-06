@@ -1,6 +1,6 @@
 import { Suspense, useState, useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, PointerLockControls, useGLTF, useVideoTexture } from "@react-three/drei";
+import { PointerLockControls, useGLTF, useVideoTexture } from "@react-three/drei";
 import { Bloom, Noise, Vignette, EffectComposer } from '@react-three/postprocessing'
 import * as THREE from "three";
 import $ from "jquery";
@@ -8,6 +8,7 @@ import $ from "jquery";
 import MODEL from "./assets/models/TamilArchive_Final.glb";
 import MODEL_CASHREG_FAN from "./assets/models/TamilArchive_CashRegnFan.glb";
 import MODEL_PAINTINGS from "./assets/models/TamilArchive_Final-Addeditems.glb";
+import MODEL_FLOOR from "./assets/models/TamilArchive_Floor.glb";
 
 import EAST_VIDEO from "./assets/media/East_Animation_lowReso.mp4";
 import WEST_VIDEO from "./assets/media/West_Animation_LowReso.mp4";
@@ -53,33 +54,33 @@ const Scene = () => {
         };
     }, []);
 
-    const handleKeyDown = (event) => {
-        if (event.key === "8" || event.key === "8") moveForward.current = true;
-        if (event.key === "4" || event.key === "4") moveLeft.current = true;
-        if (event.key === "2" || event.key === "2") moveBackward.current = true;
-        if (event.key === "6" || event.key === "6") moveRight.current = true;
-    };
-
-    const handleKeyUp = (event) => {
-        if (event.key === "8" || event.key === "8") moveForward.current = false;
-        if (event.key === "4" || event.key === "4") moveLeft.current = false;
-        if (event.key === "2" || event.key === "2") moveBackward.current = false;
-        if (event.key === "6" || event.key === "6") moveRight.current = false;
-    };
-
     // const handleKeyDown = (event) => {
-    //     if (event.key === "w" || event.key === "W") moveForward.current = true;
-    //     if (event.key === "a" || event.key === "A") moveLeft.current = true;
-    //     if (event.key === "s" || event.key === "S") moveBackward.current = true;
-    //     if (event.key === "d" || event.key === "D") moveRight.current = true;
+    //     if (event.key === "8" || event.key === "8") moveForward.current = true;
+    //     if (event.key === "4" || event.key === "4") moveLeft.current = true;
+    //     if (event.key === "2" || event.key === "2") moveBackward.current = true;
+    //     if (event.key === "6" || event.key === "6") moveRight.current = true;
     // };
 
     // const handleKeyUp = (event) => {
-    //     if (event.key === "w" || event.key === "W") moveForward.current = false;
-    //     if (event.key === "a" || event.key === "A") moveLeft.current = false;
-    //     if (event.key === "s" || event.key === "S") moveBackward.current = false;
-    //     if (event.key === "d" || event.key === "D") moveRight.current = false;
+    //     if (event.key === "8" || event.key === "8") moveForward.current = false;
+    //     if (event.key === "4" || event.key === "4") moveLeft.current = false;
+    //     if (event.key === "2" || event.key === "2") moveBackward.current = false;
+    //     if (event.key === "6" || event.key === "6") moveRight.current = false;
     // };
+
+    const handleKeyDown = (event) => {
+        if (event.key === "w" || event.key === "W") moveForward.current = true;
+        if (event.key === "a" || event.key === "A") moveLeft.current = true;
+        if (event.key === "s" || event.key === "S") moveBackward.current = true;
+        if (event.key === "d" || event.key === "D") moveRight.current = true;
+    };
+
+    const handleKeyUp = (event) => {
+        if (event.key === "w" || event.key === "W") moveForward.current = false;
+        if (event.key === "a" || event.key === "A") moveLeft.current = false;
+        if (event.key === "s" || event.key === "S") moveBackward.current = false;
+        if (event.key === "d" || event.key === "D") moveRight.current = false;
+    };
 
 useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -132,6 +133,25 @@ useEffect(() => {
                     const newPositionZ = THREE.MathUtils.clamp(
                     currentPosition.z + velocity.z * 0.1,minPosZ,maxPosZ);
                     controlsRef.current.getObject().position.set(newPositionX,currentPosition.y + bobbingOffset,newPositionZ);
+
+                    // console.log(currentPosition.z, currentPosition.x);
+
+                    if (currentPosition.z > 85 && currentPosition.z < 110) {
+                            $("#prompt-indicator").stop().fadeIn();
+                            document.onkeydown = (e) => {
+                                if (e.key === "9") {
+                                    setPromptData("CASHIER");
+                                    setOpenPrompt(true);
+
+                                    $("#prompt-indicator").stop().fadeOut();
+                                    console.log(controlsRef.current.getObject().rotation)
+                                    
+                                }
+                            }
+                    } else {
+                        $("#prompt-indicator").stop().fadeOut();
+                        setOpenPrompt(false);
+                    }
 
                     if (currentPosition.z > 20 && currentPosition.z < 60) {
                         if (currentPosition.x >= -35 && currentPosition.x < -31) {
@@ -215,7 +235,6 @@ useEffect(() => {
         };
     };
       
-      
     const updateMovement = handleMovement();
     frameId.current = requestAnimationFrame(animate);
 
@@ -261,6 +280,16 @@ useEffect(() => {
         );
     };
 
+    const FloorModel = () => {
+        const { scene } = useGLTF(MODEL_FLOOR);
+
+        return (
+            <mesh scale={1} position={[-80, -30, 250]}>
+                <primitive object={scene} />
+            </mesh>
+        );
+    };
+
     const VideoPlane = ({ videoSource, xPos, yPos, zPos, yRot }) => {
         const texture = useVideoTexture(videoSource);
         return (
@@ -296,12 +325,13 @@ useEffect(() => {
             <p id="prompt-indicator"> 9 </p>
             {openPrompt === true ? <Prompt data={promptData} counter={itemCounter} /> : null}
             <Suspense>
-                <Canvas frameloop="always" camera={{ fov: 60, near: 0.1, far: 100000, position: [0, 6, 100] }}>
+                <Canvas frameloop="always" camera={{ fov: 60, near: 0.1, far: 100000, position: [0, 6, 200] }}>
                     {dayState === "MORNING" || dayState === "AFTERNOON" ? <DayTime /> : <EveningTime />}
 
                     <Model />
                     <CashRegAndFanModel />
                     <PaintingsModels />
+                    <FloorModel />
 
                     <VideoPlane videoSource={SOUTH_VIDEO} xPos={-8} yPos={12} zPos={-235} yRot={0} />
                     <VideoPlane videoSource={EAST_VIDEO} xPos={-80} yPos={16} zPos={-25} yRot={1.6} />
