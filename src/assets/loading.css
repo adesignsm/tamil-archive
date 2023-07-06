@@ -11,7 +11,7 @@
 
 #loading-screen .loader {
     color: #dea0b7;
-    font-size: 225px;
+    font-size: 200px;
     font-family: 'VT323', monospace;
     animation: blink 1s infinite;
 }
